@@ -47,7 +47,19 @@ class Game:
         print("\nGuess the Star Wars movie title...")
 
     def get_guess(self):
-        guess = input("\nGuess a letter:  ")
+        valid_guess = False
+        while valid_guess == False:
+            try:
+                guess = input("\nGuess a letter:  ")
+                if len(guess) > 1:
+                    raise ValueError("You can only guess one letter at a time")
+                elif guess < 'a' or guess > 'z':
+                    raise ValueError("You must only make alphabet guesses (a-z)")
+            except ValueError as err:
+                print(err)
+            else:
+                valid_guess = True
+
         self.guesses.append(guess)
         if not self.active_phrase.check_letter(guess):
             self.missed += 1
